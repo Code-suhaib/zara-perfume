@@ -1,111 +1,435 @@
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap");
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* ─────────────────────────────────────────────
+   BASE LAYER — Typography, Reset, Selection
+   ───────────────────────────────────────────── */
+@layer base {
+  body {
+    font-family: "Montserrat", sans-serif;
+    background-color: #050505;
+    color: #e5e7eb;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .font-serif-lux {
+    font-family: "Cinzel", serif;
+  }
+
+  .font-body-elegant {
+    font-family: "Cormorant Garamond", serif;
+  }
+
+  ::selection {
+    background-color: #d4af37;
+    color: #000;
+  }
+
+  /* Smooth base transitions for all interactive elements */
+  a,
+  button {
+    transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Focus-visible for accessibility */
+  *:focus-visible {
+    outline: 1px solid #d4af37;
+    outline-offset: 2px;
+  }
+
+  /* Fix Browser Autofill ruining transparent backgrounds */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover, 
+  input:-webkit-autofill:focus, 
+  input:-webkit-autofill:active{
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: #e5e7eb;
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: inset 0 0 20px 20px transparent;
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+/* ─────────────────────────────────────────────
+   UTILITIES LAYER — Gold effects, Text styles
+   ───────────────────────────────────────────── */
+@layer utilities {
+  .gold-gradient-text {
+    background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
+  .btn-discover:hover {
+    background-color: #d4af37 !important;
+    color: #000000 !important;
+  }
+
+  .gold-line::after {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 1px;
+    background-color: #d4af37;
+    margin: 1rem auto;
+  }
+
+  .vertical-text {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+
+  .gold-shimmer {
+    background: linear-gradient(to right, #d4af37 20%, #fff 40%, #fff 60%, #d4af37 80%);
+    background-size: 200% auto;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: shimmer 4s linear infinite;
+  }
+
+  @keyframes shimmer {
+    to {
+      background-position: 200% center;
+    }
+  }
+
+  .split-word {
+    overflow: hidden;
+    display: inline-flex;
+  }
+
+  .split-char {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  /* Animated underline for nav links */
+  .nav-link-hover {
+    position: relative;
+  }
+
+  .nav-link-hover::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: #d4af37;
+    transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .nav-link-hover:hover::after {
+    width: 100%;
+  }
+
+  /* Footer link animated underline */
+  .footer-link {
+    position: relative;
+  }
+
+  .footer-link::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: #e5e7eb;
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .footer-link:hover::after {
+    width: 100%;
   }
 }
 
+/* ─────────────────────────────────────────────
+   GLOBAL — Scrollbar hiding (all browsers)
+   ───────────────────────────────────────────── */
+::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+html,
 body {
-  margin: 0;
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+  overflow-x: hidden !important;
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
+/* ─────────────────────────────────────────────
+   COMPONENTS LAYER — Swiper, Loader, Effects
+   ───────────────────────────────────────────── */
+@layer components {
+  /* ── Advanced Liquid Glass Utility ── */
+  .liquid-glass {
+    position: relative;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+    backdrop-filter: blur(24px) saturate(180%) contrast(110%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%) contrast(110%);
+    box-shadow: 
+      /* Specular Highlights & Rim Lighting */
+      inset 0 1px 2px rgba(255, 255, 255, 0.6),
+      inset 0 -1px 2px rgba(0, 0, 0, 0.4),
+      /* Chromatic Aberration Iridescent Edge */
+      inset -1px 0 2px rgba(0, 255, 255, 0.15),
+      inset 1px 0 2px rgba(255, 0, 0, 0.15),
+      /* Volumetric Glow & Depth */
+      0 20px 40px rgba(0, 0, 0, 0.6),
+      0 0 20px rgba(212, 175, 55, 0.1);
+    overflow: hidden;
+  }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
+  .liquid-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      105deg,
+      transparent 15%,
+      rgba(255, 255, 255, 0.1) 20%,
+      rgba(255, 255, 255, 0.4) 24%,
+      transparent 28%
+    );
+    background-size: 200% 200%;
+    animation: liquidFlow 8s ease-in-out infinite alternate;
+    mix-blend-mode: overlay;
+  }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
+  @keyframes liquidFlow {
+    0% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+  }
+
+
+  /* Swiper product carousel */
+  .product-swiper .swiper-slide img {
+    transition: filter 700ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+    filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.8));
+  }
+
+  .product-swiper .swiper-slide-active img {
+    filter: drop-shadow(0 0 35px rgba(212, 175, 55, 0.5));
+  }
+
+  /* Fade-in sections */
+  .fade-in-section {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .fade-in-section.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ── Cinematic Loader ── */
+  #cinematic-loader {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+  }
+
+  #spark {
+    width: 2px;
+    height: 2px;
+    background: #d4af37;
+    border-radius: 50%;
+    box-shadow: 0 0 10px 2px #d4af37, 0 0 20px 5px rgba(212, 175, 55, 0.5);
+    opacity: 0;
+  }
+
+  #engraved-logo {
+    position: absolute;
+    width: 120px;
+    opacity: 0;
+  }
+
+  .engrave-path {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    stroke: #d4af37;
+    stroke-width: 1;
+    fill: transparent;
+  }
+
+  .loader-brand-text {
+    font-family: "Cinzel", serif;
+    font-size: 1.5rem;
+    letter-spacing: 0.4em;
+    color: #d4af37;
+    opacity: 0;
+    text-transform: uppercase;
+  }
+
+  .loader-line {
+    width: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #d4af37, transparent);
+    opacity: 0;
+  }
+
+  /* ── Premium Background ── */
+  #premium-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 50;
+    background: radial-gradient(circle at center, transparent 60%, rgba(0, 0, 0, 0.25) 100%);
+  }
+
+  #premium-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.025;
+    background-image: url("/noise.svg");
+  }
+
+  /* ── Liquid Gold Divider ── */
+  .liquid-gold-divider {
+    width: 100%;
+    height: 150px;
+    background: url('/divider.svg') no-repeat center;
+    background-size: cover;
+    margin-top: -75px;
+    position: relative;
+    z-index: 10;
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  /* ── Volumetric Rays ── */
+  .volumetric-rays {
+    position: absolute;
+    inset: -50%;
+    background: conic-gradient(from 0deg at 50% 50%,
+        rgba(212, 175, 55, 0) 0%,
+        rgba(212, 175, 55, 0.05) 10%,
+        rgba(212, 175, 55, 0) 20%,
+        rgba(212, 175, 55, 0) 40%,
+        rgba(212, 175, 55, 0.03) 50%,
+        rgba(212, 175, 55, 0) 60%);
+    animation: rotateRays 40s linear infinite;
+    opacity: 0;
+  }
+
+  @keyframes rotateRays {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* ── Smoke Canvas ── */
+  #smoke-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+  }
+
+  /* ── Scroll Down indicator ── */
+  @keyframes scrollDown {
+    0% {
+      transform: translateY(-100%);
+    }
+
+    100% {
+      transform: translateY(300%);
+    }
+  }
+
+  /* ── Testimonial quote decoration ── */
+  .testimonial-card {
+    position: relative;
+    transition: border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .testimonial-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.08);
+  }
+
+  /* ── Swiper Navigation Arrows ── */
+  .swiper-button-prev,
+  .swiper-button-next {
+    width: 40px !important;
+    height: 40px !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
+    border-radius: 50% !important;
+    background: rgba(0, 0, 0, 0.6) !important;
+    backdrop-filter: blur(8px) !important;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  .swiper-button-prev:hover,
+  .swiper-button-next:hover {
+    border-color: #d4af37 !important;
+    background: rgba(212, 175, 55, 0.1) !important;
+  }
+
+  .swiper-button-prev::after,
+  .swiper-button-next::after {
+    font-size: 14px !important;
+    color: #d4af37 !important;
   }
 }
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
+
+/* ─────────────────────────────────────────────
+   LENIS — Smooth Scroll base styles
+   ───────────────────────────────────────────── */
+html.lenis,
+html.lenis body {
+  height: auto;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
 }
