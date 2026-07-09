@@ -11,7 +11,7 @@ app.use(helmet()); //security middleware
 app.use(
     cors({
         origin:env.CLIENT_URL,
-        credentials:ture,
+        credentials:true,
     })
 );
 //body parser
@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
 //cookies 
-app,use(cookieParser());
+app.use(cookieParser());
 //Logger
 app.use(morgan("dev"));
 //health check route

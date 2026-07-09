@@ -11,7 +11,7 @@ const connectDB = async ()=>{
     catch(error){
         console.log("database connection failed");
         console.error(error.message);
-        procsess.exit(1);
+       process.exit(1);
     }
 };
 //connection events 
@@ -21,7 +21,7 @@ mongoose.connection.on("connected",()=>{
 mongoose.connection.on("disconnected",()=>{
     console.log("connection disconnnected ");
 });
-mongoose.connection.on("errror",(error)=>{
+mongoose.connection.on("error",(error)=>{
     console.log("mongo error: ",error.message);
 });
 export default connectDB;
