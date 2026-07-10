@@ -2,7 +2,24 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function Auth() {
-  const [isLogin, setIsLogin] = useState(true);
+ const [isLogin, setIsLogin] = useState(true);
+
+const [formData, setFormData] = useState({
+  firstName: "",
+  lastName: "",
+  email: "",
+  mobile: "",
+  password: "",
+  confirmPassword: "",
+  loginIdentifier: "",
+});
+
+const handleChange = (e) => {
+  setFormData((prev) => ({
+    ...prev,
+    [e.target.name]: e.target.value,
+  }));
+};
 
   return (
     <div className="h-screen w-screen flex bg-[#050505] text-gray-200 antialiased overflow-hidden fixed inset-0">
@@ -56,45 +73,120 @@ export default function Auth() {
           <form className="space-y-7" onSubmit={(e) => e.preventDefault()}>
             
             {!isLogin && (
-              <div className="relative group">
-                <input 
-                  type="text" 
-                  id="auth-name"
-                  className="block w-full bg-transparent border-0 border-b border-gray-800 py-3.5 text-sm text-gray-200 focus:ring-0 focus:border-gold transition-colors duration-500 peer placeholder-transparent"
-                  placeholder="Full Name"
-                  autoComplete="name"
-                />
-                <label htmlFor="auth-name" className="absolute left-0 -top-3.5 text-[0.65rem] tracking-widest text-gray-600 uppercase transition-all duration-500 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-600 peer-placeholder-shown:top-3.5 peer-focus:-top-3.5 peer-focus:text-[0.65rem] peer-focus:text-gold">
-                  Full Name
-                </label>
-              </div>
-            )}
+  <div className="grid grid-cols-2 gap-5">
+    <div className="relative group">
+      <input
+        type="text"
+        id="firstName"
+        name="firstName"
+        value={formData.firstName}
+        onChange={handleChange}
+        placeholder="First Name"
+        autoComplete="given-name"
+        className="block w-full bg-transparent border-0 border-b border-gray-800 py-3.5 text-sm text-gray-200 focus:ring-0 focus:border-gold transition-colors duration-500 peer placeholder-transparent"
+      />
+      <label
+        htmlFor="firstName"
+        className="absolute left-0 -top-3.5 text-[0.65rem] tracking-widest text-gray-600 uppercase transition-all duration-500 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-600 peer-placeholder-shown:top-3.5 peer-focus:-top-3.5 peer-focus:text-[0.65rem] peer-focus:text-gold"
+      >
+        First Name
+      </label>
+    </div>
+
+    <div className="relative group">
+      <input
+        type="text"
+        id="lastName"
+        name="lastName"
+        value={formData.lastName}
+        onChange={handleChange}
+        placeholder="Last Name"
+        autoComplete="family-name"
+        className="block w-full bg-transparent border-0 border-b border-gray-800 py-3.5 text-sm text-gray-200 focus:ring-0 focus:border-gold transition-colors duration-500 peer placeholder-transparent"
+      />
+      <label
+        htmlFor="lastName"
+        className="absolute left-0 -top-3.5 text-[0.65rem] tracking-widest text-gray-600 uppercase transition-all duration-500 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-600 peer-placeholder-shown:top-3.5 peer-focus:-top-3.5 peer-focus:text-[0.65rem] peer-focus:text-gold"
+      >
+        Last Name
+      </label>
+    </div>
+  </div>
+)}
 
             <div className="relative group">
-              <input 
-                type="email" 
-                id="auth-email"
-                className="block w-full bg-transparent border-0 border-b border-gray-800 py-3.5 text-sm text-gray-200 focus:ring-0 focus:border-gold transition-colors duration-500 peer placeholder-transparent"
-                placeholder="Email Address"
-                autoComplete="email"
-              />
-              <label htmlFor="auth-email" className="absolute left-0 -top-3.5 text-[0.65rem] tracking-widest text-gray-600 uppercase transition-all duration-500 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-600 peer-placeholder-shown:top-3.5 peer-focus:-top-3.5 peer-focus:text-[0.65rem] peer-focus:text-gold">
-                Email Address
-              </label>
-            </div>
+  <input
+    type={isLogin ? "text" : "email"}
+    id="auth-email"
+    name={isLogin ? "loginIdentifier" : "email"}
+    value={isLogin ? formData.loginIdentifier : formData.email}
+    onChange={handleChange}
+    placeholder={isLogin ? "Email or Mobile" : "Email Address"}
+    autoComplete={isLogin ? "username" : "email"}
+    className="block w-full bg-transparent border-0 border-b border-gray-800 py-3.5 text-sm text-gray-200 focus:ring-0 focus:border-gold transition-colors duration-500 peer placeholder-transparent"
+  />
 
-            <div className="relative group">
-              <input 
-                type="password" 
-                id="auth-password"
-                className="block w-full bg-transparent border-0 border-b border-gray-800 py-3.5 text-sm text-gray-200 focus:ring-0 focus:border-gold transition-colors duration-500 peer placeholder-transparent"
-                placeholder="Password"
-                autoComplete={isLogin ? "current-password" : "new-password"}
-              />
-              <label htmlFor="auth-password" className="absolute left-0 -top-3.5 text-[0.65rem] tracking-widest text-gray-600 uppercase transition-all duration-500 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-600 peer-placeholder-shown:top-3.5 peer-focus:-top-3.5 peer-focus:text-[0.65rem] peer-focus:text-gold">
-                Password
-              </label>
-            </div>
+  <label
+    htmlFor="auth-email"
+    className="absolute left-0 -top-3.5 text-[0.65rem] tracking-widest text-gray-600 uppercase transition-all duration-500 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-600 peer-placeholder-shown:top-3.5 peer-focus:-top-3.5 peer-focus:text-[0.65rem] peer-focus:text-gold"
+  >
+    {isLogin ? "Email or Mobile" : "Email Address"}
+  </label>
+</div>
+        {!isLogin && (
+  <div className="relative group">
+    <input
+      type="tel"
+      id="mobile"
+      name="mobile"
+      value={formData.mobile}
+      onChange={handleChange}
+      placeholder="Mobile Number"
+      autoComplete="tel"
+      className="block w-full bg-transparent border-0 border-b border-gray-800 py-3.5 text-sm text-gray-200 focus:ring-0 focus:border-gold transition-colors duration-500 peer placeholder-transparent"
+    />
+
+    <label
+      htmlFor="mobile"
+      className="absolute left-0 -top-3.5 text-[0.65rem] tracking-widest text-gray-600 uppercase transition-all duration-500 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-600 peer-placeholder-shown:top-3.5 peer-focus:-top-3.5 peer-focus:text-[0.65rem] peer-focus:text-gold"
+    >
+      Mobile Number
+    </label>
+  </div>
+)}
+
+            <input
+  type="password"
+  id="auth-password"
+  name="password"
+  value={formData.password}
+  onChange={handleChange}
+  placeholder="Password"
+  autoComplete={isLogin ? "current-password" : "new-password"}
+  className="block w-full bg-transparent border-0 border-b border-gray-800 py-3.5 text-sm text-gray-200 focus:ring-0 focus:border-gold transition-colors duration-500 peer placeholder-transparent"
+/>
+
+{!isLogin && (
+  <div className="relative group">
+    <input
+      type="password"
+      id="confirmPassword"
+      name="confirmPassword"
+      value={formData.confirmPassword}
+      onChange={handleChange}
+      placeholder="Confirm Password"
+      autoComplete="new-password"
+      className="block w-full bg-transparent border-0 border-b border-gray-800 py-3.5 text-sm text-gray-200 focus:ring-0 focus:border-gold transition-colors duration-500 peer placeholder-transparent"
+    />
+
+    <label
+      htmlFor="confirmPassword"
+      className="absolute left-0 -top-3.5 text-[0.65rem] tracking-widest text-gray-600 uppercase transition-all duration-500 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-600 peer-placeholder-shown:top-3.5 peer-focus:-top-3.5 peer-focus:text-[0.65rem] peer-focus:text-gold"
+    >
+      Confirm Password
+    </label>
+  </div>
+)}
 
             {isLogin && (
               <div className="flex justify-between items-center text-[0.65rem] tracking-widest uppercase mt-1">
